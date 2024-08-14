@@ -20,7 +20,7 @@ namespace Acme.BookStore.Books
         IBookAppService //implement the IBookAppService
     {
         protected IBookRepository BookRepository => LazyServiceProvider.LazyGetRequiredService<IBookRepository>();
-        
+
         public BookAppService(IRepository<Book, Guid> repository)
             : base(repository)
         {
@@ -31,7 +31,7 @@ namespace Acme.BookStore.Books
         {
             var book = await BookRepository.GetByNameAsync(bookname);
             if (book.Count == 0)
-                throw new EntityNotFoundException($"This time '{bookname}' was not found");
+                throw new EntityNotFoundException($"Book '{bookname}' was not found");
             return new PagedResultDto<BookDto>(book.Count, ObjectMapper.Map<List<Book>, List<BookDto>>(book));
         }
     }
